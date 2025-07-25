@@ -1,0 +1,63 @@
+{
+  "name": "ChimeraSociety-Code",
+ "tree": {
+    "$className": "DataModel",
+    "$ignoreUnknownInstances": true,
+
+     "ReplicatedFirst": {
+      "ClientSetup":{
+        "$path": "src/ReplicatedFirst/ClientSetup" 
+      }
+    },
+
+    "ReplicatedStorage": {
+      "Libraries": {
+        "$path": "src/ReplicatedStorage/Libraries"
+      },
+      "Remotes": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/ReplicatedStorage/Remotes"
+      },
+      "SharedModules": {
+        "$path": "src/ReplicatedStorage/SharedModules"
+      }
+    },
+
+    "ServerScriptService": {
+      "AI": {
+        "$className": "Actor",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/ServerScriptService/AI"
+      },
+      "HumanoidManager":{
+        "$ignoreUnknownInstances": true,
+        "$path": "src/ServerScriptService/HumanoidManager"
+      },
+      "RunServer":{
+        "$ignoreUnknownInstances": true,
+        "$path": "src/ServerScriptService/RunServer"
+      }
+    },
+
+    "StarterGui": {
+      "Client": {
+        "$path": "src/StarterGui"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterCharacterScripts": {
+        "Test1": {
+          "$path": "src/StarterCharacterScripts"
+        }
+      },
+
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "src/StarterPlayerScripts"
+        }
+      }
+    }
+  }
+}
