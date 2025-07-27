@@ -7,15 +7,15 @@
 
 export type State = { -- type stuff for states, just outlines what all they have
 	Name: string,
-	Duration: number,
+	Duration: number | nil,
 	Static: boolean, -- sets if the state can be overwritten once added (you can still alter the properties of static states, this is just about their index)
-	Started: ({}) -> (), -- btw this little setup with the arrow just means function input and output
-	Stepped: ({}) -> (),
-	Completed: ({}) -> (),
-	Enter: (string) -> boolean, -- this is a simple return function that you can use to define the names of what states are allowed to enter this new one
-	ExitState: string, -- string where you put the name of the state that the new state should exit into (put nothing for default)
-	Data: {},
-	Visible: boolean, -- this is a weird misc thing you can set if you dont want the state to be found by certain functions
+	Started: ({}) -> () | nil, -- btw this little setup with the arrow just means function input and output
+	Stepped: ({}) -> () | nil,
+	Completed: ({}) -> () | nil,
+	Enter: (string) -> boolean | nil, -- this is a simple return function that you can use to define the names of what states are allowed to enter this new one
+	ExitState: string | nil, -- string where you put the name of the state that the new state should exit into (put nothing for default)
+	Data: {} | nil,
+	Visible: boolean | nil, -- this is a weird misc thing you can set if you dont want the state to be found by certain functions
 }
 
 local StateMachine = {}

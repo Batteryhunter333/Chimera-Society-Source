@@ -6,7 +6,7 @@ local Types = require(game.ReplicatedStorage.Libraries.Types)
 
 local skills: { Types.SkillData } = { -- data for skills
 	-------- Concrete Man
-	["CinderBlockThrow"] = {
+	CinderBlockThrow = {
 		ID = "CinderBlockThrow",
 		Name = "Heave",
 		Cooldown = 0.1,
@@ -16,7 +16,7 @@ local skills: { Types.SkillData } = { -- data for skills
 		VFXmodule = "ConcreteManVFX",
 	},
 
-	["BlockDrop"] = {
+	BlockDrop = {
 		ID = "BlockDrop",
 		Name = "Crush",
 		Cooldown = 3,
@@ -26,7 +26,7 @@ local skills: { Types.SkillData } = { -- data for skills
 		VFXmodule = "ConcreteManVFX",
 	},
 
-	["ConcreteBlast"] = {
+	ConcreteBlast = {
 		ID = "ConcreteBlast",
 		Name = "Thrust",
 		Cooldown = 4,
@@ -36,7 +36,7 @@ local skills: { Types.SkillData } = { -- data for skills
 		VFXmodule = "ConcreteManVFX",
 	},
 
-	["ConcretePlaceholder"] = {
+	ConcretePlaceholder = {
 		ID = "ConcretePlaceholder",
 		Name = "Does NOTHING LOL!!",
 		Cooldown = 9,

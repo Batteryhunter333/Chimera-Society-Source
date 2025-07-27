@@ -41,8 +41,10 @@
     },
 
     "StarterGui": {
-      "Client": {
-        "$path": "src/StarterGui"
+      "OnscreenInfo": {
+        "$className": "ScreenGui",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/StarterGui/OnscreenInfo"
       }
     },
 
@@ -54,9 +56,9 @@
       },
 
       "StarterPlayerScripts": {
-        "Client": {
-          "$path": "src/StarterPlayerScripts"
-        }
+        "$className": "StarterPlayerScripts",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/StarterPlayerScripts"
       }
     }
   }
