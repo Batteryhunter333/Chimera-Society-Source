@@ -1,5 +1,6 @@
 # Welcome to the Chimera Society Source repo!
 This is the public repository for my roblox game [Chimera Society](https://www.roblox.com/games/106820629618215/Chimera-Society).
+**You can find the repo for the lobby's code [here](https://github.com/Batteryhunter333/Chimera-Society-Lobby)!**
 
 ## ABOUT:
 
