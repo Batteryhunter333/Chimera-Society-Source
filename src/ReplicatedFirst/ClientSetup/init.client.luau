@@ -1,4 +1,5 @@
 game.Loaded:Wait()
-game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All,false)
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
 task.wait(5)
+game.ReplicatedStorage.Remotes["Game Functions"].SetPlayerLoaded:FireServer()
 game.StarterGui:SetCore("TopbarEnabled", false)

@@ -127,9 +127,7 @@ function Pathing.InitializePath(ai: Types.NPCInstance)
 
 		Costs = ai.Properties.AgentParams.Costs,
 
-		PathSettings = {
-			SupportPartialPath = ai.Properties.AgentParams.AgentSupportPartialPath,
-		},
+		PathSettings = ai.Properties.AgentParams.PathSettings,
 	})
 
 	ai.CurrentPath = path
@@ -140,7 +138,7 @@ end
 function Pathing.RouteToTarget(ai: Types.NPCInstance)
 	task.synchronize()
 	pcall(function()
-		if ai.TargetInstance then
+		if ai.TargetInstance and ai.CurrentPath then
 			local HRP = ai.TargetInstance:FindFirstChild("HumanoidRootPart")
 			ai.CurrentPath:ComputeAsync(ai.Root.Position, HRP.Position)
 			ai.LastRecalc = workspace:GetServerTimeNow()

@@ -17,7 +17,7 @@ script.Parent:BindToMessage("Instantiate", function(NPC, Variant: string, frame:
 			warn("Unable to find variant of " .. NPC .. ". Defaulting to first listed variant.")
 		end
 
-		local module = require(NPCData.ModuleFamily[selected_variant.ModuleName])
+		local module = require(selected_variant.ControllerModule)
 		if module then
 			if frame then
 				module.Instantiate(frame) -- spawn the variant of the enemy at the given cframe

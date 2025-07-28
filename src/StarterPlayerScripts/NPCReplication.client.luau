@@ -4,7 +4,7 @@ local Data = require(game.ReplicatedStorage.Libraries.NPCLibrary)
 local Hits = require(game.ReplicatedStorage.Libraries.HitnumberLibrary)
 
 local ReplicationRemotes = game.ReplicatedStorage.Remotes["NPC Replication"]
-local CallVFX = game.Players.LocalPlayer.PlayerScripts.VFXHandler.CallVFX
+local CallVFX = game.Players.LocalPlayer.PlayerScripts.Events.CallVFX
 
 local Serialization = require(game.ReplicatedStorage.SharedModules.PacketSerialization)
 
@@ -37,7 +37,7 @@ ReplicationRemotes.CreateClientModel.OnClientEvent:Connect(
 	function(NPC, Variant: string, ID: number, frame: CFrame, team: number)
 		local npcdata = Data[NPC]
 		local variantdata = npcdata.Variants[Variant]
-		local model = npcdata.ModelFamily:FindFirstChild(variantdata.ModelName)
+		local model = variantdata.Model
 		local new1 = model:Clone()
 
 		local humanoid = new1:FindFirstChildWhichIsA("Humanoid")
@@ -165,7 +165,7 @@ ReplicationRemotes.RemoveClientModel.OnClientEvent:Connect(function(calls: {}) -
 
 			local NPCtype = NPC:FindFirstChildWhichIsA("Humanoid"):GetAttribute("Type")
 			local NPCVariant = NPC:FindFirstChildWhichIsA("Humanoid"):GetAttribute("Variant")
-			local death = Data[NPCtype].Variants[NPCVariant].Actions["Death"]
+			local death = Data[NPCtype].Variants[NPCVariant].ActionsIndex["Death"]
 
 			if death then
 				task.spawn(function()

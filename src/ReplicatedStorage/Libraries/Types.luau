@@ -1,5 +1,5 @@
 export type BaseStats = {
-	Name: string | nil,
+	Name: string,
 	BaseHealth: number,
 	BaseDamage: number,
 	BaseArmor: number,
@@ -10,7 +10,7 @@ export type BaseStats = {
 export type HumanoidConfiguration = {
 	BaseStats: BaseStats, -- base stats of the humanoid
 	LevelStats: BaseStats, -- stats gained per level
-	Tags: { string }, -- extra tags for the humanoid that can be read by scripts
+	Tags: {}, -- extra tags for the humanoid that can be read by scripts
 }
 
 export type CharacterData = {
@@ -28,18 +28,18 @@ export type CharacterData = {
 
 export type NPCData = {
 	ID: string, -- name of the folder in the ai controllers folder
-	ModuleFamily: Folder, -- specified here so nothing breaks
-	ModelFamily: Folder,
 
 	Variants: { NPCVariant }, -- list of all the variants of the npc, this often could just have one entry
 	Maps: {}, -- places where the npc can spawn, used really just for enemy spawns
 }
 
 export type NPCVariant = {
-	ModuleName: string, -- using strings so nothing breaks with tryna call values that dont exist on the client
-	ModelName: string,
+	ControllerModule: ModuleScript,
+	ActionsModule: ModuleScript,
+	Model: Model,
+
 	Configuration: HumanoidConfiguration,
-	Actions: {}, -- indexes for an npcs actions on the client
+	ActionsIndex: {}, -- indexes for an npcs actions on the client
 }
 
 export type SkillData = { -- data type that stores all the skill info stuff
@@ -56,7 +56,7 @@ export type ModData = {
 	ID: string,
 	Name: string,
 
-	Tags: { string },
+	Tags: {},
 	Data: {},
 
 	CalcFunction: (subject: {}, stacks: number, input: number, tags: {}) -> number,
@@ -71,7 +71,7 @@ export type AfflictionData = {
 	StepRate: number,
 	GlobalTime: number,
 
-	Tags: { string },
+	Tags: {},
 	Data: {},
 
 	CalcFunction: (subject: {}, stacks: number, input: number, tags: {}) -> number,
@@ -87,9 +87,8 @@ export type AgentParameters = { -- these are parameters for handling things in t
 	AgentHeight: number,
 	AgentCanJump: boolean,
 	AgentCanClimb: boolean,
-	AgentSupportPartialPath: boolean,
 	WaypointSpacing: number,
-	Costs: { [string]: number }?,
+	Costs: { [string]: number }? | nil,
 	PathSettings: {
 		SupportPartialPath: boolean,
 	},
@@ -102,12 +101,12 @@ export type NPCInstance = {
 	ID: string,
 
 	TargetInstance: Model | nil,
-	CurrentPath: Path,
-	CurrentWaypoint: number,
+	CurrentPath: Path | nil,
+	CurrentWaypoint: number | nil,
 	WaypointDeb: boolean,
 
 	PathingState: number,
-	PathingConnection: RBXScriptConnection,
+	PathingConnection: RBXScriptConnection | nil,
 
 	RecalcDelay: number,
 	LastRecalc: number,
@@ -129,16 +128,16 @@ export type NPCInstance = {
 }
 
 export type HitNumber = {
-	Value: number | nil,
-	Position: Vector3 | nil,
-	Random: number | nil,
-	Drift: number | nil,
-	Weight: number | nil,
-	Scale: number | nil,
-	MainColor: Color3 | nil,
-	StrokeColor: Color3 | nil,
-	Brightness: number | nil,
-	Font: Enum.Font | nil,
+	Value: number,
+	Position: Vector3,
+	Random: number,
+	Drift: number,
+	Weight: number,
+	Scale: number,
+	MainColor: Color3,
+	StrokeColor: Color3,
+	Brightness: number,
+	Font: Enum.Font,
 }
 
 return {}

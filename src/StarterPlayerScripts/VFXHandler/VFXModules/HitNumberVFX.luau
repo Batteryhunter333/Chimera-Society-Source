@@ -8,7 +8,7 @@ local module = {}
 function module.Create(args: {})
 	local HitNumber: Types.HitNumber = table.unpack(args)
 
-	local hitnumber = game.ReplicatedStorage.VFXAssets.System.HitNumber:Clone()
+	local hitnumber = game.ReplicatedStorage.SharedAssets.VFXAssets.System.HitNumber:Clone()
 	hitnumber.Parent = workspace.Junk
 	hitnumber.Position = HitNumber.Position
 	if HitNumber.Random then
@@ -44,14 +44,10 @@ function module.Create(args: {})
 
 	-- motion
 	if HitNumber.Drift then
-		ts:Create(
-			hitnumber,
-			TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
-			{
-				Position = hitnumber.Position
-					+ Vector3.new((math.random() - 0.5) * HitNumber.Drift, 1.5, (math.random() - 0.5) * HitNumber.Drift),
-			}
-		):Play()
+		ts:Create(hitnumber, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+			Position = hitnumber.Position
+				+ Vector3.new((math.random() - 0.5) * HitNumber.Drift, 1.5, (math.random() - 0.5) * HitNumber.Drift),
+		}):Play()
 	end
 
 	-- enter animation

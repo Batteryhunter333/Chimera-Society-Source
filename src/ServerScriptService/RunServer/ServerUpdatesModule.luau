@@ -6,6 +6,7 @@ local Teams = require(game.ReplicatedStorage.Libraries.Tags).Teams
 -- does what youd expect
 -- be sure to update the libraries when you make a character, because this script assumes you did that already
 function updates.ChangePlayerCharacterModel(player: Player, char_id, skin: string, location: CFrame)
+	print(char_id)
 	local character = Characters[char_id]
 
 	-- finding and cloning the model for the character

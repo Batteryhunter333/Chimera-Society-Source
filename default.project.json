@@ -21,6 +21,21 @@
       },
       "SharedModules": {
         "$path": "src/ReplicatedStorage/SharedModules"
+      },
+
+      "SharedAssets":{
+        "$className": "Folder",
+
+        "Characters":{
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true,
+          "$path": "src/ReplicatedStorage/SharedAssets/Characters"
+        },
+        "NPCs":{
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true,
+          "$path": "src/ReplicatedStorage/SharedAssets/NPCs"
+        }
       }
     },
 
@@ -49,12 +64,12 @@
     },
 
     "StarterPlayer": {
-      "StarterCharacterScripts": {
-        "Test1": {
-          "$path": "src/StarterCharacterScripts"
-        }
+      "StarterCharacterScripts":{
+        "$className": "StarterCharacterScripts",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/StarterCharacterScripts"
       },
-
+      
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$ignoreUnknownInstances": true,

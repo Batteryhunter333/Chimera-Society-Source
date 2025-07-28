@@ -1,10 +1,11 @@
 local ServerUpdates = require(script.ServerUpdatesModule)
 local HumanoidHandler = require(game.ServerScriptService.HumanoidManager)
-local serverSize = nil
 
 local Teams = require(game.ReplicatedStorage.Libraries.Tags).Teams
-
 local Remotes = game.ReplicatedStorage.Remotes
+
+local serverSize = 0
+local playersLoaded = 0
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- literally all this does is set up the server depending on the context
@@ -15,9 +16,17 @@ game.Players.PlayerAdded:Connect(function(plr)
 		end
 	end)
 
-	if game:GetService("RunService"):IsStudio() then -- this will set your character and related info to whatever is stored in the value under this script
-		plr.CharacterAdded:Wait()
+	local joinData = plr:GetJoinData()
+	local tpData = joinData.TeleportData
 
+	if not serverSize and tpData then
+		serverSize = tpData[1]
+		workspace.Info.Players.Value = serverSize
+	end
+end)
+
+game.ReplicatedStorage.Remotes["Game Functions"].SetPlayerLoaded.OnServerEvent:Connect(function(plr)
+	if game:GetService("RunService"):IsStudio() then -- this will set your character and related info to whatever is stored in the value under this script
 		ServerUpdates.ChangePlayerCharacterModel(
 			plr,
 			script:GetAttribute("TestCharacter"),
@@ -27,13 +36,9 @@ game.Players.PlayerAdded:Connect(function(plr)
 	else -- this sets everything up using the teleport data from the lobby place
 		local joinData = plr:GetJoinData()
 		local tpData = joinData.TeleportData
+		print(tpData)
 
-		if not serverSize then
-			serverSize = tpData[1]
-			workspace.Info.Players.Value = serverSize
-		end
-
-		print(tpData[2])
+		playersLoaded += 1
 	end
 end)
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------

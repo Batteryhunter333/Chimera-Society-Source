@@ -24,7 +24,7 @@ game.ReplicatedStorage.Remotes.VFX.CallVFXUnreliable.OnClientEvent:Connect(funct
 	end
 end)
 
-script.CallVFX.Event:Connect(function(VFXname, functionName, ...)
+script.Parent.Events.CallVFX.Event:Connect(function(VFXname, functionName, ...)
 	local args = { ... }
 	local module = require(script.VFXModules:WaitForChild(VFXname))
 	module[functionName](args)

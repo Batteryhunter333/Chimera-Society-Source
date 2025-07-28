@@ -11,7 +11,7 @@ local stacks_deb = false
 local SkillsLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary)
 local Tags = require(game.ReplicatedStorage.Libraries.Tags)
 local StateMachine = require(game.ReplicatedStorage.SharedModules.StateMachine)
-local CooldownUI = require(plr.PlayerGui.OnscreenInfo.CooldownUIHandler)
+local CooldownUI = require(plr.PlayerGui:WaitForChild("OnscreenInfo").CooldownUIHandler)
 
 local SkillStateMachines = {}
 
@@ -216,8 +216,11 @@ end
 -- above we set up the logic that controls the SLOTS skills go into
 -- this properly sets up the actual skills
 
-script.Parent.Events.SetSkills.Event:Connect(
+print(plr.PlayerScripts.Events.SetSkills)
+
+plr.PlayerScripts.Events.SetSkills.Event:Connect(
 	function(skill_states: { StateMachine.State }) -- gives your skill slot state machines the provided skill states
+		print("setting here ok")
 		local icons = {}
 		local skill_data = {}
 

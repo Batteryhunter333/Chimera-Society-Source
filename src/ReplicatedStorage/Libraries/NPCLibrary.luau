@@ -1,5 +1,6 @@
 local Types = require(game.ReplicatedStorage.Libraries.Types)
-local Models = game.ReplicatedStorage.NPCModels
+local Models = game.ReplicatedStorage.SharedAssets.NPCs.Models
+local Actions = game.ReplicatedStorage.SharedAssets.NPCs.Actions
 
 local module: { Types.NPCData } = {
 
@@ -8,13 +9,12 @@ local module: { Types.NPCData } = {
 
 	TestEnemy = {
 		ID = "TestEnemy",
-		ModuleFamily = "TestEnemy",
-		ModelFamily = Models.TestEnemy,
 
 		Variants = {
 			Vanilla = { -- default variant
-				ModuleName = "TestEnemyVanilla",
-				ModelName = "TestEnemyVanilla",
+				ControllerModule = nil,
+				ActionsModule = Actions.TestEnemy.TestEnemyVanilla,
+				Model = Models.TestEnemy.TestEnemyVanilla,
 
 				Configuration = {
 					BaseStats = {
@@ -29,7 +29,7 @@ local module: { Types.NPCData } = {
 					Tags = {},
 				},
 
-				Actions = {
+				ActionsIndex = {
 					Death = 0,
 				},
 			},
@@ -41,11 +41,13 @@ local module: { Types.NPCData } = {
 	-- technically every npc in this module is custom but these guys dont spawn in naturally soooo
 }
 
-if game:GetService("RunService"):IsServer() then
+if game:GetService("RunService"):IsServer() then -- init module families
 	local Controllers = game.ServerScriptService.AI.Controllers
 
 	for _, data in pairs(module) do
-		data.ModuleFamily = Controllers:FindFirstChild(data.ModuleFamily)
+		for variant, info in pairs(data.Variants) do
+			info.ControllerModule = Controllers:FindFirstChild(data.ID):FindFirstChild(data.ID .. variant)
+		end
 	end
 end
 

@@ -1,13 +1,13 @@
 -- the model in replicated storage has an ID tag that gets set to the id assigned here
 local Types = require(game.ReplicatedStorage.Libraries.Types)
 local Tags = require(game.ReplicatedStorage.Libraries.Tags)
-local Characters = game.ReplicatedStorage.Characters
+local Characters = game.ReplicatedStorage.SharedAssets.Characters
 
 local characters: { Types.CharacterData } = {
 	["ConcreteMan"] = {
 
-		CharacterScripts = Characters["Concrete Man"].Scripts,
-		CharacterSkins = Characters["Concrete Man"].Skins,
+		CharacterScripts = Characters.Scripts["Concrete Man"],
+		CharacterSkins = Characters.Models["Concrete Man"],
 
 		HealthbarIcon = "rbxassetid://118693043360000",
 		DamagedIcon = "rbxassetid://117696618639414",
@@ -29,8 +29,8 @@ local characters: { Types.CharacterData } = {
 	},
 
 	["Remedy"] = {
-		CharacterScripts = Characters.Remedy.Scripts,
-		CharacterSkins = Characters.Remedy.Skins,
+		CharacterScripts = Characters.Scripts.Remedy,
+		CharacterSkins = Characters.Models.Remedy,
 
 		HealthbarIcon = "rbxassetid://118693043360000",
 		DamagedIcon = "rbxassetid://117696618639414",
