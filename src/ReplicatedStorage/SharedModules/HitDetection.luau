@@ -85,7 +85,38 @@ function HitDetection.HitSphereOnce(pos: Vector3, rad: number, visualize: boolea
 		game.Debris:AddItem(part, 1)
 	end
 
-	return HitDetection.FilterHumanoids(workspace:GetPartBoundsInRadius(pos, rad))
+	local hits = workspace:GetPartBoundsInRadius(pos, rad)
+	return HitDetection.FilterHumanoids(hits)
+end
+
+-- single box hit
+function HitDetection.HitBoxOnce(frame: CFrame, size: Vector3, visualize: boolean)
+	local params = OverlapParams.new()
+	params.FilterDescendantsInstances = workspace.Entities:GetDescendants()
+	params.FilterType = Enum.RaycastFilterType.Include
+
+	if visualize then
+		local part = Instance.new("Part")
+		part.Parent = workspace.Junk
+		part.CFrame = frame
+		part.Size = size
+		part.Anchored = true
+		part.CanCollide = false
+		part.CanTouch = false
+		part.CanQuery = false
+		part.Transparency = 0.5
+		part.Color = Color3.new(1, 0.2, 0.2)
+		part.Material = Enum.Material.Neon
+		part.Shape = Enum.PartType.Block
+
+		game:GetService("TweenService")
+			:Create(part, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { Transparency = 1 })
+			:Play()
+		game.Debris:AddItem(part, 1)
+	end
+
+	local hits = workspace:GetPartBoundsInBox(frame, size, params)
+	return HitDetection.FilterHumanoids(hits)
 end
 
 return HitDetection

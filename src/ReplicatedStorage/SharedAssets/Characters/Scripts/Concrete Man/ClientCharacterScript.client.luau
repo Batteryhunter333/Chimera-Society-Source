@@ -22,7 +22,11 @@ local CharacterSkillStates: { StateMachine.State } = {
 			local hum = character:FindFirstChildWhichIsA("Humanoid")
 			local ID = hum:GetAttribute("ID")
 
-			local hits = HitDetection.HitSphereOnce(game.Players.LocalPlayer:GetMouse().Hit.Position, 5, true)
+			local hits = HitDetection.HitBoxOnce(
+				CFrame.new(game.Players.LocalPlayer:GetMouse().Hit.Position),
+				Vector3.new(3, 3, 3),
+				true
+			)
 			hits = HitDetection.FilterHits(hits, HitDetection.FilteringTypes.PlayerHit)
 			hits = HitDetection.ConvertToIDs(hits)
 			SendDamage:FireServer(hits, ID, SkillsLibrary.CinderBlockThrow.Damage, HitsLibrary.index.Basic)
