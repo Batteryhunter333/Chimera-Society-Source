@@ -11,6 +11,7 @@ local SendDamage = game.ReplicatedStorage.Remotes["Game Functions"].SendDamage
 local SendKnockback = game.ReplicatedStorage.Remotes["Game Functions"].SendKnockback
 
 local skin = script.Parent:GetAttribute("Skin")
+local troll = SkillsLibrary.CinderBlockThrow
 
 local CharacterSkillStates: { StateMachine.State } = {
 	{
@@ -21,6 +22,7 @@ local CharacterSkillStates: { StateMachine.State } = {
 			local character = game.Players.LocalPlayer.Character
 			local hum = character:FindFirstChildWhichIsA("Humanoid")
 			local ID = hum:GetAttribute("ID")
+			print("hi")
 
 			local hits = HitDetection.HitBoxOnce(
 				CFrame.new(game.Players.LocalPlayer:GetMouse().Hit.Position),
