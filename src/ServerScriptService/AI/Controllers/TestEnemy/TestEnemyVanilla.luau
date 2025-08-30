@@ -5,7 +5,7 @@ local EnemyHandler = require(game.ServerScriptService.AI.NPCHandler)
 local HumanoidHandler = require(game.ServerScriptService.HumanoidManager)
 local StateMachine = require(game.ReplicatedStorage.SharedModules.StateMachine)
 
-local NPCData = require(game.ReplicatedStorage.Libraries.NPCLibrary)
+local NPCData = require(game.ReplicatedStorage.Libraries.NPCLibrary).NPCData
 local FamilyData = NPCData.TestEnemy
 local EnemyData = FamilyData.Variants.Vanilla
 local Types = require(game.ReplicatedStorage.Libraries.Types)

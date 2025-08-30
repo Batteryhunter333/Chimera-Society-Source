@@ -4,6 +4,8 @@
 -- !!ENSURE CHARACTERS SECTIONS ARE NAMED THE SAME AS
 local Types = require(game.ReplicatedStorage.Libraries.Types)
 
+local module = {}
+
 local skills: { Types.SkillData } = { -- data for skills
 	-------- Concrete Man
 	CinderBlockThrow = {
@@ -47,4 +49,13 @@ local skills: { Types.SkillData } = { -- data for skills
 	},
 }
 
-return skills
+function module.Test()
+	print("Test")
+end
+
+function module.GetSkills()
+	return skills
+end
+
+module.Skills = skills
+return module

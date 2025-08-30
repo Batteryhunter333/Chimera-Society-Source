@@ -51,4 +51,6 @@ if game:GetService("RunService"):IsServer() then -- init module families
 	end
 end
 
-return module
+return {
+	NPCData = module,
+}

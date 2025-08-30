@@ -3,6 +3,7 @@ local HitDetection = require(game.ReplicatedStorage.SharedModules.HitDetection)
 local ts = game:GetService("TweenService")
 
 local SkillsLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary)
+local Skills = SkillsLibrary.Skills
 local HitsLibrary = require(game.ReplicatedStorage.Libraries.HitnumberLibrary)
 local Tags = require(game.ReplicatedStorage.Libraries.Tags)
 
@@ -11,11 +12,10 @@ local SendDamage = game.ReplicatedStorage.Remotes["Game Functions"].SendDamage
 local SendKnockback = game.ReplicatedStorage.Remotes["Game Functions"].SendKnockback
 
 local skin = script.Parent:GetAttribute("Skin")
-local troll = SkillsLibrary.CinderBlockThrow
 
 local CharacterSkillStates: { StateMachine.State } = {
 	{
-		Name = SkillsLibrary.CinderBlockThrow.ID,
+		Name = Skills.CinderBlockThrow.ID,
 		Visible = true,
 
 		Started = function()
@@ -31,7 +31,7 @@ local CharacterSkillStates: { StateMachine.State } = {
 			)
 			hits = HitDetection.FilterHits(hits, HitDetection.FilteringTypes.PlayerHit)
 			hits = HitDetection.ConvertToIDs(hits)
-			SendDamage:FireServer(hits, ID, SkillsLibrary.CinderBlockThrow.Damage, HitsLibrary.index.Basic)
+			SendDamage:FireServer(hits, ID, Skills.CinderBlockThrow.Damage, HitsLibrary.index.Basic)
 		end,
 
 		Stepped = function() end,
@@ -40,16 +40,16 @@ local CharacterSkillStates: { StateMachine.State } = {
 	},
 
 	{
-		Name = SkillsLibrary.BlockDrop.ID,
+		Name = Skills.BlockDrop.ID,
 		Visible = true,
 
 		Completed = function()
-			CallVFX:Fire("ConcreteManVFX", SkillsLibrary.BlockDrop.ID, game.Players.LocalPlayer:GetMouse().Hit, skin)
+			CallVFX:Fire("ConcreteManVFX", Skills.BlockDrop.ID, game.Players.LocalPlayer:GetMouse().Hit, skin)
 		end,
 	},
 
 	{
-		Name = SkillsLibrary.ConcreteBlast.ID,
+		Name = Skills.ConcreteBlast.ID,
 		Visible = true,
 
 		Started = function()
@@ -59,7 +59,7 @@ local CharacterSkillStates: { StateMachine.State } = {
 			local ID = hum:GetAttribute("ID")
 
 			if HRP:IsA("BasePart") then
-				CallVFX:Fire("ConcreteManVFX", SkillsLibrary.ConcreteBlast.ID, HRP, skin)
+				CallVFX:Fire("ConcreteManVFX", Skills.ConcreteBlast.ID, HRP, skin)
 
 				ts:Create(
 					HRP,
@@ -70,7 +70,7 @@ local CharacterSkillStates: { StateMachine.State } = {
 				local hits = HitDetection.HitSphereOnce(HRP.Position, 10, true)
 				hits = HitDetection.FilterHits(hits, HitDetection.FilteringTypes.PlayerHit)
 				hits = HitDetection.ConvertToIDs(hits)
-				SendDamage:FireServer(hits, ID, SkillsLibrary.ConcreteBlast.Damage, HitsLibrary.index.Basic)
+				SendDamage:FireServer(hits, ID, Skills.ConcreteBlast.Damage, HitsLibrary.index.Basic)
 				SendKnockback:FireServer(hits, HRP.Position, 200)
 			end
 		end,

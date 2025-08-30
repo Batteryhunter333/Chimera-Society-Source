@@ -1,6 +1,6 @@
 local module = {}
 local ts = game:GetService("TweenService")
-local SkillLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary)
+local SkillLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary).Skills
 
 local SecondaryCubeColors = {
 	Default = Color3.new(0.8, 0.8, 0.8),
