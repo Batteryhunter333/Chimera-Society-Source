@@ -1,5 +1,5 @@
 export type BaseStats = {
-	Name: string,
+	Name: string | nil,
 	BaseHealth: number,
 	BaseDamage: number,
 	BaseArmor: number,
