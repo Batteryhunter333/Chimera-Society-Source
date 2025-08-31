@@ -31,7 +31,7 @@ game.ReplicatedStorage.Remotes["Game Functions"].SetPlayerLoaded.OnServerEvent:C
 			plr,
 			script:GetAttribute("TestCharacter"),
 			script:GetAttribute("Skin"),
-			CFrame.new(0, 0, 0)
+			CFrame.new(0, 5, 0)
 		)
 	else -- this sets everything up using the teleport data from the lobby place
 		local joinData = plr:GetJoinData()

@@ -1,3 +1,5 @@
+local StateMachine = require(game.ReplicatedStorage.SharedModules.StateMachine)
+
 export type BaseStats = {
 	Name: string | nil,
 	BaseHealth: number,
@@ -40,6 +42,13 @@ export type NPCVariant = {
 
 	Configuration: HumanoidConfiguration,
 	ActionsIndex: {}, -- indexes for an npcs actions on the client
+}
+
+export type NPCInitializer = {
+	States: { StateMachine.State },
+	InstanceConfiguration: NPCInstance,
+
+	Initialize: (NPCInstance) -> (),
 }
 
 export type SkillData = { -- data type that stores all the skill info stuff
@@ -95,10 +104,10 @@ export type AgentParameters = { -- these are parameters for handling things in t
 }
 
 export type NPCInstance = {
-	Root: BasePart,
-	Humanoid: Humanoid,
-	Model: Model,
-	ID: string,
+	Root: BasePart | nil,
+	Humanoid: Humanoid | nil,
+	Model: Model | nil,
+	ID: string | nil,
 
 	TargetInstance: Model | nil,
 	CurrentPath: Path | nil,

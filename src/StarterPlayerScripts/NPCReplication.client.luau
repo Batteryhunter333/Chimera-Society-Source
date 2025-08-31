@@ -1,6 +1,6 @@
 -- hi there, this is the script that tells the player what the npcs are doing on the server
 -- you really shouldnt have to edit this at all, definitely talk to me before messing with anything in here
-local Data = require(game.ReplicatedStorage.Libraries.NPCLibrary)
+local Data = require(game.ReplicatedStorage.Libraries.NPCLibrary).NPCData
 local Hits = require(game.ReplicatedStorage.Libraries.HitnumberLibrary)
 
 local ReplicationRemotes = game.ReplicatedStorage.Remotes["NPC Replication"]

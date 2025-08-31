@@ -17,6 +17,10 @@ local Targetting = {}
 -- this is also used by other functions in the module so be careful if you edit it (you probably shouldnt edit anything in this script)
 function Targetting.GetEnemyHumanoids(ai: Types.NPCInstance)
 	task.desynchronize()
+	if not ai.Humanoid then
+		return
+	end
+
 	local registered_hum = HumanoidHandler.Get(ai.Humanoid)
 	if not registered_hum then
 		return
@@ -28,6 +32,13 @@ end
 -- considers things like head offset, distance from objective, and more
 function Targetting.GetTargetEnemy(ai: Types.NPCInstance, esp: boolean)
 	task.synchronize()
+	if not ai.Humanoid then
+		return
+	end
+	if not ai.Root then
+		return
+	end
+
 	local registered_hum = HumanoidHandler.Get(ai.Humanoid)
 	if not registered_hum then
 		return
@@ -137,6 +148,10 @@ end
 -- this is a simple function that routes the NPCs CurrentPath variable to its TargetInstance variable
 function Pathing.RouteToTarget(ai: Types.NPCInstance)
 	task.synchronize()
+	if not ai.Root then
+		return
+	end
+
 	pcall(function()
 		if ai.TargetInstance and ai.CurrentPath then
 			local HRP = ai.TargetInstance:FindFirstChild("HumanoidRootPart")

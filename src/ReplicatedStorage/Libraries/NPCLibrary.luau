@@ -12,7 +12,6 @@ local module: { Types.NPCData } = {
 
 		Variants = {
 			Vanilla = { -- default variant
-				ControllerModule = nil,
 				ActionsModule = Actions.TestEnemy.TestEnemyVanilla,
 				Model = Models.TestEnemy.TestEnemyVanilla,
 

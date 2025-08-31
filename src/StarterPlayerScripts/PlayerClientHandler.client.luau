@@ -8,7 +8,7 @@ local set_humanoid_skill_data = game.ReplicatedStorage.Remotes["Game Functions"]
 
 local stacks_deb = false
 
-local SkillsLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary)
+local SkillsLibrary = require(game.ReplicatedStorage.Libraries.SkillsLibrary).Skills
 local Tags = require(game.ReplicatedStorage.Libraries.Tags)
 local StateMachine = require(game.ReplicatedStorage.SharedModules.StateMachine)
 local CooldownUI = require(plr.PlayerGui:WaitForChild("OnscreenInfo").CooldownUIHandler)
