@@ -16,6 +16,7 @@ function HitDetection.FilterHumanoids(parts: { BasePart })
 
 	for _, part in pairs(parts) do
 		local hum = part.Parent:FindFirstChildWhichIsA("Humanoid")
+
 		if hum then
 			if not table.find(hums, hum) and hum.Health > 0 then
 				table.insert(hums, hum)
@@ -63,6 +64,7 @@ end
 function HitDetection.HitSphereOnce(pos: Vector3, rad: number, visualize: boolean)
 	local params = OverlapParams.new()
 	params.FilterDescendantsInstances = workspace.Entities:GetDescendants()
+	params.CollisionGroup = "Hitbox"
 	params.FilterType = Enum.RaycastFilterType.Include
 
 	if visualize then
@@ -93,6 +95,7 @@ end
 function HitDetection.HitBoxOnce(frame: CFrame, size: Vector3, visualize: boolean)
 	local params = OverlapParams.new()
 	params.FilterDescendantsInstances = workspace.Entities:GetDescendants()
+	params.CollisionGroup = "Hitbox"
 	params.FilterType = Enum.RaycastFilterType.Include
 
 	if visualize then
