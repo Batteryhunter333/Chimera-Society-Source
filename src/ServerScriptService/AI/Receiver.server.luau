@@ -46,7 +46,7 @@ local function Instantiate(NPC: string, variant: string, frame: CFrame, initiali
 	hum:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, false)
 
 	-- creates a proper instance object for the NPC
-	local NPCInstance = initializer.InstanceConfiguration
+	local NPCInstance = table.clone(initializer.InstanceConfiguration)
 	NPCInstance.Root = root
 	NPCInstance.Model = Model
 	NPCInstance.Humanoid = hum
@@ -121,7 +121,7 @@ script.Parent:BindToMessage("Instantiate", function(NPC: string, variant: string
 end)
 
 -------- loop to run all active NPC state machines
-game["Run Service"].Heartbeat:ConnectParallel(function()
+game["Run Service"].Heartbeat:Connect(function()
 	for i, machine in pairs(active) do
 		if workspace:GetServerTimeNow() - machine.Data.SanityTick >= 5 then
 			machine.Data.SanityTick = workspace:GetServerTimeNow()

@@ -220,7 +220,6 @@ print(plr.PlayerScripts.Events.SetSkills)
 
 plr.PlayerScripts.Events.SetSkills.Event:Connect(
 	function(skill_states: { StateMachine.State }) -- gives your skill slot state machines the provided skill states
-		print("setting here ok")
 		local icons = {}
 		local skill_data = {}
 

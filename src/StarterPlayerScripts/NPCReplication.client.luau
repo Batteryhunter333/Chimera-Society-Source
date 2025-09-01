@@ -17,7 +17,6 @@ local function CallNPCAction(ID: number, index: number)
 	local NPC = Replicated[ID]
 	if NPC then
 		local actions = require(NPC:FindFirstChildWhichIsA("ModuleScript"))
-		print("action")
 		actions[index]()
 	end
 end
@@ -252,7 +251,6 @@ end)
 ReplicationRemotes.ReplicateKnockback.OnClientEvent:Connect(function(calls: {})
 	for _, call in pairs(calls) do
 		local ID, dir, power = Serialization.ReadKnockbackPacket(call[1])
-		print(ID)
 		local NPC = Replicated[ID]
 		local HRP = NPC:FindFirstChild("HumanoidRootPart")
 
