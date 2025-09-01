@@ -1,5 +1,5 @@
-local NPCs = require(game.ReplicatedStorage.Libraries.NPCLibrary)
-local Actions = NPCs.TestEnemy.Variants.Vanilla.Actions
+local NPCs = require(game.ReplicatedStorage.Libraries.NPCLibrary).NPCData
+local Actions = NPCs.TestEnemy.Variants.Vanilla.ActionsIndex
 
 local actions = {
 	[Actions.Death] = function()

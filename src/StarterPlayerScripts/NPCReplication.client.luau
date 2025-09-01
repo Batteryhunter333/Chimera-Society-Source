@@ -40,6 +40,10 @@ ReplicationRemotes.CreateClientModel.OnClientEvent:Connect(
 		local model = variantdata.Model
 		local new1 = model:Clone()
 
+		local actions = variantdata.ActionsModule:Clone()
+		actions.Parent = new1
+		actions.Name = "Actions"
+
 		local humanoid = new1:FindFirstChildWhichIsA("Humanoid")
 		local health_fill = new1.HumanoidRootPart.HealthbarAttachment.BillboardGui.Bar_Fill
 		local health_outline = new1.HumanoidRootPart.HealthbarAttachment.BillboardGui.Bar_Outline
@@ -148,6 +152,19 @@ ReplicationRemotes.CreateClientModel.OnClientEvent:Connect(
 		Healthbars[ID] = HealthConnection
 	end
 )
+
+-- ensures the positions from the client and server are somewhat close
+ReplicationRemotes.SanityCheck.OnClientEvent:Connect(function(calls: {})
+	for _, call in pairs(calls) do
+		local ID, posServer = Serialization.ReadNPCMovementPacket(call[1])
+		local NPC = Replicated[ID]
+		local posClient = NPC:FindFirstChild("HumanoidRootPart").Position
+
+		if (posServer - posClient).Magnitude > 2 then
+			NPC:MoveTo(posServer)
+		end
+	end
+end)
 
 -- removes the specified model from the client
 ReplicationRemotes.RemoveClientModel.OnClientEvent:Connect(function(calls: {}) -- serialized

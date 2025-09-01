@@ -1,11 +1,10 @@
 -- this is the broad handler for enemy ai, controllers use the types and functions in this script as a baseline to build off of
 -- this is a parallel script, so expect to see a TONNNNNNNNNNNNN of syncing and desyncing
 local HumanoidHandler = require(game.ServerScriptService.HumanoidManager)
+local Batcher = require(game.ReplicatedStorage.Remotes.RemoteBatcher)
 local Serialization = require(game.ReplicatedStorage.SharedModules.PacketSerialization)
 
 local Types = require(game.ReplicatedStorage.Libraries.Types)
-
-local Batcher = require(game.ReplicatedStorage.Remotes.RemoteBatcher)
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -------- TARGETTING FUNCTIONS

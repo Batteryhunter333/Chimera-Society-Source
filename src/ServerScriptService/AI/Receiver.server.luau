@@ -6,6 +6,8 @@ local Data = require(game.ReplicatedStorage.Libraries.NPCLibrary).NPCData
 
 local HumanoidManager = require(game.ServerScriptService.HumanoidManager)
 local StateMachine = require(game.ReplicatedStorage.SharedModules.StateMachine)
+local Batcher = require(game.ReplicatedStorage.Remotes.RemoteBatcher)
+local Serialization = require(game.ReplicatedStorage.SharedModules.PacketSerialization)
 
 local active = {}
 
@@ -62,6 +64,7 @@ local function Instantiate(NPC: string, variant: string, frame: CFrame, initiali
 	-- setting up the state machine for the ai
 	local NPCMachine = StateMachine.new()
 	NPCMachine.Data.NPC = NPCInstance
+	NPCMachine.Data.SanityTick = workspace:GetServerTimeNow()
 	NPCMachine:DefineStates(initializer.States, "Neutral", "Spawn")
 	NPCMachine:Set("Spawn")
 
@@ -120,6 +123,13 @@ end)
 -------- loop to run all active NPC state machines
 game["Run Service"].Heartbeat:ConnectParallel(function()
 	for i, machine in pairs(active) do
+		if workspace:GetServerTimeNow() - machine.Data.SanityTick >= 5 then
+			machine.Data.SanityTick = workspace:GetServerTimeNow()
+
+			local packet = Serialization.WriteNPCMovementPacket(machine.Data.NPC.Root.Position, i)
+			Batcher.Remotes["SanityCheck"]:FireAllClients(packet)
+		end
+
 		if machine.Data.NPC.Humanoid.Health <= 0 then
 			active[i] = nil
 		else
