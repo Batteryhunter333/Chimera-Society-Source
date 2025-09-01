@@ -92,17 +92,17 @@ script.Parent:BindToMessage("Instantiate", function(NPC: string, variant: string
 		local selected_variant
 		local variant_name
 
-		for i, v in pairs(NPCData.Variants) do -- easy way to default to the first index of the variants list no matter what
-			selected_variant = v
-			variant_name = i
-			break
-		end
-
 		if NPCData.Variants[variant] then
 			selected_variant = NPCData.Variants[variant]
-			variant_name = variant_name
+			variant_name = variant
 		else
 			warn("Unable to find variant of " .. NPC .. ". Defaulting to first listed variant.")
+
+			for i, v in pairs(NPCData.Variants) do -- easy way to default to the first index of the variants list no matter what
+				selected_variant = v
+				variant_name = i
+				break
+			end
 		end
 
 		local initializer = require(selected_variant.ControllerModule)

@@ -32,6 +32,28 @@ local module: { Types.NPCData } = {
 					Death = 0,
 				},
 			},
+
+			Modeled = { -- variant with unique model
+				ActionsModule = Actions.TestEnemy.TestEnemyModeled,
+				Model = Models.TestEnemy.TestEnemyModeled,
+
+				Configuration = {
+					BaseStats = {
+						Name = "Stupid Loser",
+						BaseHealth = 30,
+						BaseDamage = 5,
+						BaseArmor = 0,
+						BaseSpeed = 14,
+						BaseJump = 8,
+					},
+
+					Tags = {},
+				},
+
+				ActionsIndex = {
+					Death = 0,
+				},
+			},
 		},
 	},
 
