@@ -10,8 +10,60 @@ local Batcher = require(Remotes.RemoteBatcher)
 local Serialization = require(game.ReplicatedStorage.SharedModules.PacketSerialization)
 local Trove = require(game.ReplicatedStorage.SharedModules.Trove)
 
-local RegisteredHumanoid = {} -- the registered humanoid object that gets created
+local RegisteredHumanoid = { -- the registered humanoid object that gets created
+	Name = "Undisclosed",
+	Level = 0,
+	Team = Tags.Teams.None,
+
+	Damage = 2,
+	Armor = 0,
+	BaseStats = nil,
+	LevelStats = nil,
+
+	ID = 0,
+	OriginHumanoid = nil, -- humanoid provided to register
+	Root = nil, -- root of the npc model
+
+	Modifiers = {}, -- holder of the humanoids modifiers
+	Afflictions = {}, -- holder of the humanoids afflictions
+	Tags = {}, -- tags that can be given to a registered humanoid, and read by other scripts
+
+	Trove = nil,
+}
 RegisteredHumanoid.__index = RegisteredHumanoid
+
+local RegisteredNPC = setmetatable({}, RegisteredHumanoid)
+RegisteredNPC.__index = RegisteredNPC
+
+local RegisteredPlayer = setmetatable({
+	SkillData = {
+		[Tags.SkillSlots.Primary] = {
+			["BaseCooldown"] = 0,
+			["BaseStacks"] = 0,
+		},
+
+		[Tags.SkillSlots.Secondary] = {
+			["BaseCooldown"] = 0,
+			["BaseStacks"] = 0,
+		},
+
+		[Tags.SkillSlots.ShortUtility] = {
+			["BaseCooldown"] = 0,
+			["BaseStacks"] = 0,
+		},
+
+		[Tags.SkillSlots.Utility] = {
+			["BaseCooldown"] = 0,
+			["BaseStacks"] = 0,
+		},
+
+		[Tags.SkillSlots.Special] = {
+			["BaseCooldown"] = 0,
+			["BaseStacks"] = 0,
+		},
+	},
+}, RegisteredHumanoid)
+RegisteredPlayer.__index = RegisteredPlayer
 
 -- these are used as a fallback if the script cannot find any base stats to give the humanoid
 -- these should NEVER be used under normal circumstances
@@ -514,42 +566,32 @@ end
 -- a lot of this is just skill cooldown stuff, since npc humanoids dont use skills
 -- the server and client also both need to interact for skill cooldown stuff, so theres all this malarky
 
-function RegisteredHumanoid:CalcSkillStacks(slot: string) -- calculates your max stacks for a skill
-	if self:IsPlayer() then
-		local new_stacks = self.SkillData[slot]["BaseStacks"]
-		new_stacks = IterateModifiers(self, new_stacks, { Tags.Calculations.ExtraStacksCalc[slot] })
-		return new_stacks
-	else
-		warn(
-			"This method is player-only. Please do not call this method if the registered humanoid does not belong to a player!"
-		)
-	end
-	return nil
+function RegisteredPlayer:CalcSkillStacks(slot: string) -- calculates your max stacks for a skill
+	local new_stacks = self.SkillData[slot]["BaseStacks"]
+	new_stacks = IterateModifiers(self, new_stacks, { Tags.Calculations.ExtraStacksCalc[slot] })
+	return new_stacks
 end
 
-function RegisteredHumanoid:CalcSkillCooldown(slot: string) -- calculates your cooldown for a skill
-	if self:IsPlayer() then
-		local new_cooldown = self.SkillData[slot]["BaseCooldown"]
-		new_cooldown = IterateModifiers(self, new_cooldown, { Tags.Calculations.SkillCooldownCalc[slot] })
-		return new_cooldown
-	else
-		warn(
-			"This method is player-only. Please do not call this method if the registered humanoid does not belong to a player!"
-		)
-	end
-	return nil
+function RegisteredPlayer:CalcSkillCooldown(slot: string) -- calculates your cooldown for a skill
+	local new_cooldown = self.SkillData[slot]["BaseCooldown"]
+	new_cooldown = IterateModifiers(self, new_cooldown, { Tags.Calculations.SkillCooldownCalc[slot] })
+	return new_cooldown
 end
 
-function RegisteredHumanoid:SetSkillData(data: {}) -- sets a humanoids skill data, which is used for cooldowns mainly
-	if self:IsPlayer() then
-		for slot, skill_data in pairs(data) do
-			self.SkillData[slot] = skill_data
-		end
-	else
-		warn(
-			"This method is player-only. Please do not call this method if the registered humanoid does not belong to a player!"
-		)
+function RegisteredPlayer:SetSkillData(data: {}) -- sets a humanoids skill data, which is used for cooldowns mainly
+	for slot, skill_data in pairs(data) do
+		self.SkillData[slot] = skill_data
 	end
+end
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------- NPC FUNCTIONS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- these should only be used (and will only work) on registered humanoids tied to an NPC instance
+-- these mainly deal with state machines and stuff, all mechanics that only ever apply to NPCs
+
+function RegisteredNPC:ApplyStun(duration: number)
+	print("Stunning self for " .. duration)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -575,28 +617,20 @@ script.Parent.Register.Event:Connect(
 			return
 		end
 
+		local Registered
+		if game.Players:GetPlayerFromCharacter(hum.Parent) then
+			Registered = setmetatable({}, RegisteredPlayer)
+		else
+			Registered = setmetatable({}, RegisteredNPC)
+		end
+
 		-- these are the default values shared by every single registered humanoid instance
-
-		local Registered = setmetatable({
-			Name = "Undisclosed",
-			Level = 0,
-			Team = Tags.Teams.None,
-
-			Damage = 2,
-			Armor = 0,
-			BaseStats = placeholder_config.BaseStats,
-			LevelStats = placeholder_config.LevelStats,
-
-			ID = RegisterNewID(hum),
-			OriginHumanoid = hum, -- humanoid provided to register
-			Root = hum.Parent:FindFirstChild("HumanoidRootPart"), -- root of the npc model
-
-			Modifiers = {}, -- holder of the humanoids modifiers
-			Afflictions = {}, -- holder of the humanoids afflictions
-			Tags = {}, -- tags that can be given to a registered humanoid, and read by other scripts
-
-			Trove = Trove.new(),
-		}, RegisteredHumanoid)
+		Registered.BaseStats = placeholder_config.BaseStats
+		Registered.LevelStats = placeholder_config.LevelStats
+		Registered.ID = RegisterNewID(hum)
+		Registered.OriginHumanoid = hum
+		Registered.Root = hum.Parent:FindFirstChild("HumanoidRootPart")
+		Registered.Trove = Trove.new()
 		hum.UseJumpPower = false
 
 		-- initializes the values for the registered humanoid based off what is provided in the configuration
@@ -618,36 +652,6 @@ script.Parent.Register.Event:Connect(
 
 		-- assigns a team regardless of what you provide, as well as adding it to its team list
 		Registered:SetTeam(team)
-
-		-- if the humanoid is one belonging to a player, initializes the player's skill data
-		if Registered:IsPlayer() then
-			Registered.SkillData = {
-				[Tags.SkillSlots.Primary] = {
-					["BaseCooldown"] = 0,
-					["BaseStacks"] = 0,
-				},
-
-				[Tags.SkillSlots.Secondary] = {
-					["BaseCooldown"] = 0,
-					["BaseStacks"] = 0,
-				},
-
-				[Tags.SkillSlots.ShortUtility] = {
-					["BaseCooldown"] = 0,
-					["BaseStacks"] = 0,
-				},
-
-				[Tags.SkillSlots.Utility] = {
-					["BaseCooldown"] = 0,
-					["BaseStacks"] = 0,
-				},
-
-				[Tags.SkillSlots.Special] = {
-					["BaseCooldown"] = 0,
-					["BaseStacks"] = 0,
-				},
-			}
-		end
 
 		-- adds all the stuff that needs cleaning to the humanoid's trove
 		-- everything in the trove is deleted after the humanoid is unregistered

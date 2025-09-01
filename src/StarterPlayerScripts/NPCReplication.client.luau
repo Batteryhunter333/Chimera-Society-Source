@@ -249,6 +249,7 @@ end)
 
 -- applies the knockback recieved by an npc on the server
 ReplicationRemotes.ReplicateKnockback.OnClientEvent:Connect(function(calls: {})
+	print("Applying knockback in batch of " .. #calls)
 	for _, call in pairs(calls) do
 		local ID, dir, power = Serialization.ReadKnockbackPacket(call[1])
 		local NPC = Replicated[ID]

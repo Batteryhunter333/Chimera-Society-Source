@@ -94,6 +94,11 @@ Remotes["Game Functions"].SendDamage.OnServerEvent:Connect(
 Remotes["Game Functions"].SendKnockback.OnServerEvent:Connect(
 	function(plr, targets: { number }, vector3: Vector3, power: number)
 		local rPlr = HumanoidHandler.Get(plr.Character:FindFirstChildWhichIsA("Humanoid"))
+		local mode = 0
+
+		if vector3.X > 1 or vector3.Y > 1 or vector3.Z > 1 or vector3.X < -1 or vector3.Y < -1 or vector3.Z < -1 then
+			mode = 1
+		end
 
 		for _, ID in pairs(targets) do
 			local rTarget = HumanoidHandler.GetFromID(ID)
@@ -102,14 +107,7 @@ Remotes["Game Functions"].SendKnockback.OnServerEvent:Connect(
 			if (rTarget.Team ~= rPlr.Team or rPlr.ID == rTarget.ID) and rTarget.Team ~= Teams.Spectator then
 				-- this just checks if the vector3 given is a position or a directions for convenience sake
 				-- that way the script will automatically do a pulse/knockback depending on what you give it
-				if
-					vector3.X > 1
-					or vector3.Y > 1
-					or vector3.Z > 1
-					or vector3.X < -1
-					or vector3.Y < -1
-					or vector3.Z < -1
-				then
+				if mode == 1 then
 					rTarget:ApplyPulse(vector3, power)
 				else
 					rTarget:ApplyKnockback(vector3, power)

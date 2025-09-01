@@ -120,6 +120,16 @@ script.Parent:BindToMessage("Instantiate", function(NPC: string, variant: string
 	end
 end)
 
+script.Parent:BindToMessage("SetNPCState", function(ID: number, state: string)
+	local Machine = active[ID]
+
+	if Machine then
+		Machine:Set(state)
+	else
+		warn("Cannot find an NPC with the ID " .. ID)
+	end
+end)
+
 -------- loop to run all active NPC state machines
 game["Run Service"].Heartbeat:Connect(function()
 	for i, machine in pairs(active) do
