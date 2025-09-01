@@ -24,6 +24,18 @@ local module: { Types.NPCData } = {
 						BaseSpeed = 14,
 						BaseJump = 8,
 					},
+					LevelStats = {
+						BaseHealth = 5,
+						BaseDamage = 0.5,
+						BaseArmor = 1,
+						BaseSpeed = 0,
+						BaseJump = 0,
+					},
+					TargettingStats = {
+						RigPriority = 10,
+						PlayerPriority = 10,
+						MinionPriority = 10,
+					},
 
 					Tags = {},
 				},
@@ -45,6 +57,18 @@ local module: { Types.NPCData } = {
 						BaseArmor = 0,
 						BaseSpeed = 14,
 						BaseJump = 8,
+					},
+					LevelStats = {
+						BaseHealth = 5,
+						BaseDamage = 0.5,
+						BaseArmor = 1,
+						BaseSpeed = 0,
+						BaseJump = 0,
+					},
+					TargettingStats = {
+						RigPriority = 10,
+						PlayerPriority = 10,
+						MinionPriority = 10,
 					},
 
 					Tags = {},

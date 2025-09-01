@@ -32,10 +32,12 @@ local RegisteredHumanoid = { -- the registered humanoid object that gets created
 }
 RegisteredHumanoid.__index = RegisteredHumanoid
 
-local RegisteredNPC = setmetatable({}, RegisteredHumanoid)
+local RegisteredNPC = setmetatable({ -- version that NPCs get
+	TargettingStats = nil,
+}, RegisteredHumanoid)
 RegisteredNPC.__index = RegisteredNPC
 
-local RegisteredPlayer = setmetatable({
+local RegisteredPlayer = setmetatable({ -- version that players get
 	SkillData = {
 		[Tags.SkillSlots.Primary] = {
 			["BaseCooldown"] = 0,
@@ -643,6 +645,10 @@ script.Parent.Register.Event:Connect(
 
 			if configuration.LevelStats then
 				Registered.LevelStats = configuration.LevelStats
+			end
+
+			if configuration.TargettingStats then
+				Registered.TargettingStats = configuration.TargettingStats
 			end
 
 			if configuration.Tags then

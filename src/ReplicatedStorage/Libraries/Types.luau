@@ -9,9 +9,16 @@ export type BaseStats = {
 	BaseJump: number,
 }
 
+export type TargettingStats = {
+	RigPriority: number,
+	PlayerPriority: number,
+	MinionPriority: number,
+}
+
 export type HumanoidConfiguration = {
 	BaseStats: BaseStats, -- base stats of the humanoid
 	LevelStats: BaseStats, -- stats gained per level
+	TargettingStats: TargettingStats | nil,
 	Tags: {}, -- extra tags for the humanoid that can be read by scripts
 }
 
